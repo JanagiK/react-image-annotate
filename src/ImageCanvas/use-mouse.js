@@ -156,8 +156,10 @@ export default ({
       }
     },
     onWheel: (e) => {
+      /*    
       const direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0
-      zoomIn(direction, mousePosition.current)
+      zoomIn(direction, mousePosition.current) 
+      */
       // e.preventDefault()
     },
     onContextMenu: (e) => {

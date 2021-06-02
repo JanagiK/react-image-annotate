@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useReducer, useEffect } from "react"
+import React, { useReducer, useRef, useEffect } from "react"
 import type { Node } from "react"
 import MainLayout from "../MainLayout"
 import type {
@@ -22,6 +22,7 @@ import historyHandler from "./reducers/history-handler.js"
 import useEventCallback from "use-event-callback"
 import makeImmutable, { without } from "seamless-immutable"
 import getFromLocalStorage from "../utils/get-from-local-storage"
+import getActiveImage from "../Annotator/reducers/get-active-image"
 
 type Props = {
   taskDescription?: string,
@@ -93,6 +94,27 @@ export const Annotator = ({
   hidePrev,
   allowComments,
 }: Props) => {
+
+
+  const memoizedActionFns = useRef({})
+  const action = (type: string, ...params: Array<string>) => {
+    const fnKey = `${type}(${params.join(",")})`
+    if (memoizedActionFns.current[fnKey])
+      return memoizedActionFns.current[fnKey]
+
+    const fn = (...args: any) =>
+      params.length > 0
+        ? dispatch(
+            ({
+              type,
+              ...params.reduce((acc, p, i) => ((acc[p] = args[i]), acc), {}),
+            }: any)
+          )
+        : dispatch({ type, ...args[0] })
+    memoizedActionFns.current[fnKey] = fn
+    return fn
+  }
+
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
     if (selectedImage === -1) selectedImage = undefined
@@ -141,18 +163,22 @@ export const Annotator = ({
           }),
     })
   )
+  const { currentImageIndex, activeImage } = getActiveImage(state)
 
-  const dispatch = useEventCallback((action: Action) => {
-    if (action.type === "HEADER_BUTTON_CLICKED") {
-      if (["Exit", "Done", "Save", "Complete"].includes(action.buttonName)) {
+  const dispatch = useEventCallback((_action: Action) => {
+    if (_action.type === "HEADER_BUTTON_CLICKED") {
+      if (["Exit", "Done", "Save", "Complete"].includes(_action.buttonName)) {
         return onExit(without(state, "history"))
-      } else if (action.buttonName === "Next" && onNextImage) {
+      } else if (_action.buttonName === "Next" && onNextImage) {
         return onNextImage(without(state, "history"))
-      } else if (action.buttonName === "Prev" && onPrevImage) {
+      } else if (_action.buttonName === "Prev" && onPrevImage) {
         return onPrevImage(without(state, "history"))
+      } else if (_action.buttonName === "Clear") {
+        (activeImage ? activeImage.regions : []).forEach((r) => action("DELETE_REGION", "region")(r))
+        return
       }
     }
-    dispatchToReducer(action)
+    dispatchToReducer(_action)
   })
 
   const onRegionClassAdded = useEventCallback((cls) => {

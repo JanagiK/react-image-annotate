@@ -236,8 +236,8 @@ export const MainLayout = ({
             iconDictionary={iconDictionary}
             hideHeader={hideHeader}
             hideHeaderText={hideHeaderText}
-            headerLeftSide={[
-              state.annotationType === "video" ? (
+            headerLeftSide={[]
+/*               [state.annotationType === "video" ? (
                 <KeyframeTimeline
                   currentTime={state.currentVideoTime}
                   duration={state.videoDuration}
@@ -247,9 +247,11 @@ export const MainLayout = ({
               ) : activeImage ? (
                 <div className={classes.headerTitle}>{activeImage.name}</div>
               ) : null,
-            ].filter(Boolean)}
-            headerItems={[
-              !hidePrev && { name: "Prev" },
+            ].filter(Boolean) */
+          }
+            headerItems={
+               [
+/*               !hidePrev && { name: "Prev" },
               !hideNext && { name: "Next" },
               state.annotationType !== "video"
                 ? null
@@ -258,9 +260,11 @@ export const MainLayout = ({
                 : { name: "Pause" },
               !nextImageHasRegions && activeImage.regions && { name: "Clone" },
               { name: "Settings" },
-              state.fullScreen ? { name: "Window" } : { name: "Fullscreen" },
+              state.fullScreen ? { name: "Window" } : { name: "Fullscreen" }, */
+              { name: "Clear" },
               { name: "Save" },
-            ].filter(Boolean)}
+            ].filter(Boolean)
+          }
             onClickHeaderItem={onClickHeaderItem}
             onClickIconSidebarItem={onClickIconSidebarItem}
             selectedTools={[
@@ -268,7 +272,8 @@ export const MainLayout = ({
               state.showTags && "show-tags",
               state.showMask && "show-mask",
             ].filter(Boolean)}
-            iconSidebarItems={[
+            iconSidebarItems={[]
+/*             [
               {
                 name: "select",
                 helperText: "Select" + getHotkeyHelpText("select_tool"),
@@ -326,12 +331,13 @@ export const MainLayout = ({
                 name: "modify-allowed-area",
                 helperText: "Modify Allowed Area",
               },
-            ]
-              .filter(Boolean)
+            ].filter(Boolean)
               .filter(
                 (a) => a.alwaysShowing || state.enabledTools.includes(a.name)
-              )}
-            rightSidebarItems={[
+              ) */
+            }
+            rightSidebarItems={[]
+/*               [
               debugModeOn && (
                 <DebugBox state={debugModeOn} lastAction={state.lastAction} />
               ),
@@ -380,11 +386,12 @@ export const MainLayout = ({
                 history={state.history}
                 onRestoreHistory={action("RESTORE_HISTORY")}
               />,
-            ].filter(Boolean)}
+            ].filter(Boolean) */
+          }
           >
             {canvas}
           </Workspace>
-          <SettingsDialog
+{/*           <SettingsDialog
             open={state.settingsOpen}
             onClose={() =>
               dispatch({
@@ -392,7 +399,7 @@ export const MainLayout = ({
                 buttonName: "Settings",
               })
             }
-          />
+          /> */}
         </HotkeyDiv>
       </FullScreen>
     </FullScreenContainer>

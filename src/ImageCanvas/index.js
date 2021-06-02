@@ -373,7 +373,7 @@ export const ImageCanvas = ({
           showHighlightBox={showHighlightBox}
         />
       )}
-      {imageLoaded && showTags && !dragging && (
+{/*       {imageLoaded && showTags && !dragging && (
         <PreventScrollToParents key="regionTags">
           <RegionTags
             regions={regions}
@@ -407,7 +407,7 @@ export const ImageCanvas = ({
             allowComments={allowComments}
           />
         </div>
-      )}
+      )} */}
 
       {zoomWithPrimary && zoomBox !== null && (
         <div

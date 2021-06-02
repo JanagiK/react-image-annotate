@@ -20,11 +20,11 @@ export default () => {
         >
           <Annotator
             {...(annotatorProps: any)}
+            selectedTool="create-polygon"
             onExit={(output) => {
-              delete (output: any)["lastAction"]
-              changeLastOutput(output)
-              changeAnnotatorOpen(false)
+              console.log(output)
             }}
+            showTags={false}
           />
         </ErrorBoundaryDialog>
       ) : (
