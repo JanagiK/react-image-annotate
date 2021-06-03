@@ -43,11 +43,12 @@ const FullScreenContainer = styled("div")({
   width: "100%",
   height: "100%",
   "& .fullscreen": {
-    width: "100%",
-    height: "100%",
+    width: "574px",
+    height: "574px",
+    margin: "0 auto",
+    position: "relative",
   },
 })
-
 type Props = {
   state: MainLayoutState,
   RegionEditLabel?: Node,

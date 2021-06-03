@@ -474,9 +474,9 @@ export const ImageCanvas = ({
           />
         </>
       </PreventScrollToParents>
-      <div className={classes.zoomIndicator}>
+      {/* <div className={classes.zoomIndicator}>
         {((1 / mat.a) * 100).toFixed(0)}%
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -20,7 +20,7 @@ export default () => {
         >
           <Annotator
             {...(annotatorProps: any)}
-            selectedTool="create-polygon"
+            selectedTool="create-box"
             onExit={(output) => {
               console.log(output)
             }}
